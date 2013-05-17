@@ -33,7 +33,7 @@ int do_some_stuff ();
 #endif
 
 #if constant(DEBUG)
-constant DO_DEBUG = 1;	
+constant DO_DEBUG = 1;
 #else
 constant DO_DEBUG = 0;
 #endif
@@ -87,7 +87,7 @@ array(SöndagsStek) get_roast ()
 	return ({ SöndagsStek() });
 }
 
-class classFoo 
+class classFoo
 {
 	inherit SöndagsStek;
 
@@ -152,7 +152,7 @@ constant animal = (program)"to-tmlanguage";
 //! Lets add a docblock here and see if we eventually will
 //! parse doc comments. Ref an argument @[argc] and say that it needs to be
 //! something like @tt{1@}.
-//! 
+//!
 //! @decl void main(int argc, array(string) argv)
 //!
 //! @link http://pike.lysator.liu.se
@@ -167,11 +167,11 @@ constant animal = (program)"to-tmlanguage";
 //!  Absoluteley nothing
 //!
 //! @mapping
-//!  @member int "depth" 
+//!  @member int "depth"
 //!  @member mapping "map"
 //! @endmapping
 //!
-//! @note 
+//! @note
 //!  to self! Don't do anything stupid!
 //!
 //! @example
@@ -253,5 +253,21 @@ void main(int argc, array(string) argv) {
 		"90%% is %d% so to speak"
 		;
 
+        // Things inside functions differ from the global scope and conditional blocks.
+        function_call(); // Special treatment names like "function*"
+#if SOMETHING
+        function_call(); // Special treatment for names starting with function*
+        Xfunction_call();
+#endif
+
 	return;
 }
+
+// A pice of code messing up the rest of the file
+#if SOMETHING
+string res =
+  some_function((["title" : LOCALE(0, "Links") ])) +
+  "width: 40px;"
+  "seriously broken here"
+  // This is not a string...
+#endif
